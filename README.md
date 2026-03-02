@@ -1,2 +1,51 @@
-# webscrap_test
-WebScrap for test do get public information from brazil gorvenment 
+# WebScrap Test - Contratos Públicos (Portal e-Pública)
+
+Aplicação Python para extrair dados de contratos no Portal da Transparência e-Pública, incluindo:
+
+- Valor total do contrato
+- Município
+- Unidade gestora
+- Responsáveis jurídicos
+- Gestores
+- Fiscais
+- Itens do contrato com paginação
+
+## Estrutura do projeto
+
+```text
+src/contracts_scraper/
+  domain/models.py            # Entidades de domínio (ContractData, ContractItem, ResponsiblePerson)
+  services/contract_scraper.py # Lógica de scraping e paginação
+  utils/config.py             # Leitura de app.properties
+  main.py                     # Ponto de entrada
+app.properties                # Configuração da URL e parâmetros da execução
+```
+
+## Configuração
+
+Edite `app.properties`:
+
+```ini
+[portal]
+contract_url = https://transparencia.e-publica.net/epublica-portal/#/palmeira/portal/compras/contratoView?params=%7B%22id%22:%22MV8yMDMy%22,%22mode%22:%22INFO%22%7D
+headless = true
+timeout_ms = 90000
+```
+
+## Execução
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m playwright install chromium
+PYTHONPATH=src python -m contracts_scraper.main
+```
+
+A saída será JSON no terminal com todos os dados coletados.
+
+## Observações
+
+- O portal é renderizado com JavaScript, por isso o scraper usa Playwright.
+- A paginação dos itens é tratada buscando o botão de próxima página na seção "Itens".
+- Caso o portal altere o HTML/seletores, ajuste os seletores em `services/contract_scraper.py`.
