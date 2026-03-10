@@ -4,12 +4,17 @@ import re
 from typing import List, Set
 from urllib.parse import urlparse
 
+
 from typing import TYPE_CHECKING
 
 from contracts_scraper.domain.models import ContractData, ContractItem, ResponsiblePerson
 
 if TYPE_CHECKING:
     from playwright.sync_api import Page
+
+
+from playwright.sync_api import Page, sync_playwright
+
 
 
 class ContractScraperService:

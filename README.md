@@ -45,6 +45,7 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 ```
 
 ### 2) Teste de execução real do scraper (integração)
+## Execução
 
 ```bash
 python -m venv .venv
@@ -55,6 +56,7 @@ PYTHONPATH=src python -m contracts_scraper.main
 ```
 
 A execução imprime JSON no terminal com os dados extraídos do contrato.
+A saída será JSON no terminal com todos os dados coletados.
 
 ## Observações
 
