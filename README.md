@@ -14,11 +14,15 @@ Aplicação Python para extrair dados de contratos no Portal da Transparência e
 
 ```text
 src/contracts_scraper/
-  domain/models.py            # Entidades de domínio (ContractData, ContractItem, ResponsiblePerson)
+  domain/models.py             # Entidades de domínio (ContractData, ContractItem, ResponsiblePerson)
   services/contract_scraper.py # Lógica de scraping e paginação
-  utils/config.py             # Leitura de app.properties
-  main.py                     # Ponto de entrada
-app.properties                # Configuração da URL e parâmetros da execução
+  utils/config.py              # Leitura de app.properties
+  main.py                      # Ponto de entrada
+tests/
+  test_config.py               # Testes unitários de configuração
+  test_models.py               # Testes de serialização de domínio
+  test_service_unit.py         # Testes unitários da lógica do scraper (sem browser)
+app.properties                 # Configuração da URL e parâmetros da execução
 ```
 
 ## Configuração
@@ -32,6 +36,15 @@ headless = true
 timeout_ms = 90000
 ```
 
+## Como testar
+
+### 1) Testes unitários (não dependem de Playwright)
+
+```bash
+PYTHONPATH=src python -m unittest discover -s tests -v
+```
+
+### 2) Teste de execução real do scraper (integração)
 ## Execução
 
 ```bash
@@ -42,6 +55,7 @@ python -m playwright install chromium
 PYTHONPATH=src python -m contracts_scraper.main
 ```
 
+A execução imprime JSON no terminal com os dados extraídos do contrato.
 A saída será JSON no terminal com todos os dados coletados.
 
 ## Observações
